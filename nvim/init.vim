@@ -20,7 +20,7 @@ set scrolloff=8
 set noshowmode
 set completeopt=menuone,noinsert,noselect
 set signcolumn=yes
-set guifont=Monaco\ 15 
+set guifont=Monaco\ 15
 set ic
 let g:airline_powerline_fonts = 1
 call plug#begin('~/.vim/plugged')
@@ -69,10 +69,10 @@ autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_
     \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
 
 autocmd BufWritePre *.js Neoformat
-"ColorScheme 
+"ColorScheme
 colorscheme gruvbox
 
-"coc conf 
-source /home/isham/.config/nvim/coc.vim
-"Custom map 
+"coc conf
+source ~/.config/nvim/coc.vim
+"Custom map
 nmap <Leader>r :NERDTreeFocus<cr>R<c-w><c-p>
