@@ -1,3 +1,3 @@
-# READ ME file of my dotfiles for Arch linux
+# READ ME file of dotfiles for i3wm arch.
 
 
