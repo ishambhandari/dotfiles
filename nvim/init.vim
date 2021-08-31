@@ -4,6 +4,8 @@ set nohlsearch
 set hidden
 set noerrorbells
 set tabstop=4 softtabstop=4
+set listchars=tab:\|\ 
+set list
 set path+=**
 set shiftwidth=4
 set expandtab
@@ -20,11 +22,15 @@ set scrolloff=8
 set noshowmode
 set completeopt=menuone,noinsert,noselect
 set signcolumn=yes
-set guifont=Monaco\ 15
+set guifont=Monaco\ 15 
 set ic
+set conceallevel=2
+set list lcs=tab:\|\
 let g:airline_powerline_fonts = 1
 call plug#begin('~/.vim/plugged')
 Plug 'gruvbox-community/gruvbox'
+Plug 'mattn/emmet-vim'
+Plug 'Yggdroot/indentLine'
 Plug 'preservim/nerdtree'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -49,6 +55,9 @@ Plug 'tpope/vim-commentary'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'sbdchd/neoformat'
+Plug 'lilydjwg/colorizer'
+Plug 'lambdalisue/suda.vim'
+Plug 'overcache/NeoSolarized'
 call plug#end()
 
 highlight Normal guibg=none
@@ -58,10 +67,10 @@ nnoremap <c-k> 5k
 " visual mode:
 xnoremap <c-j> 5j
 xnoremap <c-k> 5k
-
+:inoremap jk <esc>
 let g:prettier#autoformat = 0
-autocmd BufWritePre *.js,*.jsx,*.mjs,*.css,*.less,*.scss, PrettierAsync
 " AutoMode
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.css,*.less,*.scss, PrettierAsync
 autocmd VimEnter * NERDTree | wincmd p
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
     \ quit | endif
@@ -69,10 +78,19 @@ autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_
     \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
 
 autocmd BufWritePre *.js Neoformat
-"ColorScheme
-colorscheme gruvbox
-
-"coc conf
-source ~/.config/nvim/coc.vim
-"Custom map
+"ColorScheme 
+colorscheme NeoSolarized 
+"coc conf 
+source /home/isham/.config/nvim/coc.vim
+"Custom map 
 nmap <Leader>r :NERDTreeFocus<cr>R<c-w><c-p>
+"let
+" let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+" let g:indentLine_enabled = 0
+" highlight Conceal guifg=#ff0000 guibg=#00ff00
+let g:indentLine_setConceal = 0
+let g:indentLine_char = '|'
+" let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+let g:indentLine_concealcursor = 'inc'
+let g:indentLine_conceallevel = 1
+let g:indentLine_color_term = 109 
