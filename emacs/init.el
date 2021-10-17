@@ -10,11 +10,13 @@
 ;; Set up the visible bell
 (setq visible-bell nil)
 (setq mac-command-key-is-meta t)
+(setq display-line-numbers 'relative)
 
 (set-face-attribute 'default nil :font "Fira Code Retina" :height 150)
 
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-(load-theme 'zenburn t)
+;;(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(use-package dracula-theme)
+(load-theme 'dracula t)
 
 
 
@@ -27,6 +29,7 @@
   
 ;; Initialize package sources
 (require 'package)
+(require 'use-package)
 
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
                          ("org" . "https://orgmode.org/elpa/")
@@ -81,6 +84,11 @@
 (global-set-key (kbd "C-k") (lambda () (interactive) (previous-line 10)))
 (global-set-key (kbd "C-j") (lambda () (interactive) (next-line 10)))
 
+;;Nerd tree
+(use-package neotree)
+(require 'neotree)
+(global-set-key [f8] 'neotree-toggle)
+(setq projectile-switch-project-action 'neotree-projectile-action)
 
 (use-package general
   :config
@@ -166,6 +174,21 @@
 	 ("\\.jsx\\'" . web-mode)
 	 ("\\.html\\'" . web-mode))
   :commands web-mode)
+(add-to-list 'auto-mode-alist '("\\.jsx?$" . web-mode)) 
+(setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'")))
+
+;;flycheck
+
+(use-package flycheck)
+(setq-default flycheck-disabled-checkers
+              (append flycheck-disabled-checkers
+                      '(javascript-jshint json-jsonlist)))
+;; Enable eslint checker for web-mode
+(flycheck-add-mode 'javascript-eslint 'web-mode)
+;; Enable flycheck globally
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
+
 ;;company
 (setq company-minimum-prefix-length 1
       company-idle-delay 0.0)
@@ -207,8 +230,11 @@
                             (enable-minor-mode
                              '("\\.js?\\'" . prettier-js-mode))))
 
-(eval-after-load 'js-mode
-  '(add-hook 'js-mode-hook #'add-node-modules-path))
+(add-hook 'js2-mode-hook 'prettier-js-mode)
+(add-hook 'web-mode-hook 'prettier-js-mode)
+
+;; (eval-after-load 'js-mode
+;;   '(add-hook 'js-mode-hook #'add-node-modules-path))
 
   (evil-ex-define-cmd "q" 'kill-this-buffer)
 ;; (use-package rjsx-mode
@@ -239,6 +265,7 @@
 ;;     "--bracket-spacing" "false")))
 
 (electric-pair-mode 1)
+(use-package highlight-indent-guides)
  (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
  (setq highlight-indent-guides-method 'character)
  (evil-commentary-mode)
@@ -270,7 +297,7 @@
  '(custom-safe-themes
    '("d14f3df28603e9517eb8fb7518b662d653b25b26e83bd8e129acea042b774298" default))
  '(package-selected-packages
-   '(add-node-modules-path prettier evil-commentary highlight-indent-guides typescript-mode lsp-mode forge evil-magit counsel-projectile projectile which-key use-package telephone-line rainbow-delimiters key-chord hydra general evil-collection doom-modeline counsel command-log-mode)))
+   '(eslint-fix exec-path-from-shell dracula-theme add-node-modules-path prettier evil-commentary highlight-indent-guides typescript-mode lsp-mode forge evil-magit counsel-projectile projectile which-key use-package telephone-line rainbow-delimiters key-chord hydra general evil-collection doom-modeline counsel command-log-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
