@@ -10,6 +10,8 @@
 ;; Set up the visible bell
 (setq visible-bell nil)
 (setq mac-command-key-is-meta t)
+(setq global-prettier-mode t)
+(add-hook 'after-init-hook #'global-prettier-mode)
 (setq display-line-numbers 'relative)
 (setq gc-cons-threshold 100000000)
 (set-default 'truncate-lines t)
@@ -339,6 +341,13 @@
 ;;   (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)))
 
 ;; orgmode
+(use-package undo-tree
+  :ensure t
+  :config
+  (evil-set-undo-system 'undo-tree)
+  (global-undo-tree-mode))
+  
+
 
 (defun efs/org-mode-setup ()
   (org-indent-mode)
@@ -395,8 +404,9 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    '("d14f3df28603e9517eb8fb7518b662d653b25b26e83bd8e129acea042b774298" default))
+ '(org-agenda-files '("~/tasks.org"))
  '(package-selected-packages
-   '(org-bullets tide rg ripgrep mu4e-views eslint-fix exec-path-from-shell dracula-theme add-node-modules-path prettier evil-commentary highlight-indent-guides typescript-mode forge evil-magit counsel-projectile projectile which-key use-package telephone-line rainbow-delimiters key-chord hydra general evil-collection doom-modeline counsel command-log-mode)))
+   '(undo-tree org-bullets tide rg ripgrep mu4e-views eslint-fix exec-path-from-shell dracula-theme add-node-modules-path prettier evil-commentary highlight-indent-guides typescript-mode forge evil-magit counsel-projectile projectile which-key use-package telephone-line rainbow-delimiters key-chord hydra general evil-collection doom-modeline counsel command-log-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
