@@ -397,6 +397,34 @@
 			 "~/tasks.org"
 			 ))
 (global-set-key (kbd "C-c a") 'org-agenda)
+
+(use-package org-roam
+  :ensure t
+  :init
+  (setq org-roam-v2-ack t)
+  :custom
+  (org-roam-directory "~/RoamNotes")
+  (org-roam-completion-everywhere t)
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+         ("C-c n f" . org-roam-node-find)
+         ("C-c n i" . org-roam-node-insert)
+         :map org-mode-map
+         ("C-M-i"    . completion-at-point))
+  :config
+  (org-roam-setup))
+
+
+
+
+;; PYTHON MODE
+
+(use-package python-mode
+  :ensure t
+  :hook (python-mode . lsp-deferred)
+  :custom
+  (python-shell-interpreter "python3")
+  )
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -406,7 +434,7 @@
    '("d14f3df28603e9517eb8fb7518b662d653b25b26e83bd8e129acea042b774298" default))
  '(org-agenda-files '("~/tasks.org"))
  '(package-selected-packages
-   '(undo-tree org-bullets tide rg ripgrep mu4e-views eslint-fix exec-path-from-shell dracula-theme add-node-modules-path prettier evil-commentary highlight-indent-guides typescript-mode forge evil-magit counsel-projectile projectile which-key use-package telephone-line rainbow-delimiters key-chord hydra general evil-collection doom-modeline counsel command-log-mode)))
+   '(org-roam undo-tree org-bullets tide rg ripgrep mu4e-views eslint-fix exec-path-from-shell dracula-theme add-node-modules-path prettier evil-commentary highlight-indent-guides typescript-mode forge evil-magit counsel-projectile projectile which-key use-package telephone-line rainbow-delimiters key-chord hydra general evil-collection doom-modeline counsel command-log-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
