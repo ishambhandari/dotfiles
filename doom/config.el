@@ -9,6 +9,9 @@
 (setq user-full-name "isham"
       user-mail-address "ishambhandari007@gmail.com")
 
+(global-set-key (kbd "C-k") (lambda () (interactive) (previous-line 10)))
+(global-set-key (kbd "C-j") (lambda () (interactive) (next-line 10)))
+
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
 ;;
@@ -25,7 +28,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-gruvbox)
+(setq doom-theme 'doom-one)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -79,3 +82,48 @@
         ("/account-1/Sent Items" . ?s)
         ("/account-1/Drafts"     . ?d)
         ("/account-1/Trash"      . ?t)))
+
+
+(setq display-line-numbers-type 'relative)
+
+(defface custom-line-highlight '((t (:background "red" :extend t))) "")
+(add-hook
+ 'treemacs-mode-hook
+ (defun channge-hl-line-mode ()
+   (setq-local hl-line-face 'custom-line-highlight)
+   (overlay-put hl-line-overlay 'face hl-line-face)
+   (treemacs--setup-icon-background-colors)))
+
+
+;; RUSTIC MODE
+(add-to-list 'auto-mode-alist '("\\.rs\\'" . rustic-mode))
+(setq lsp-rust-server 'rust-analyzer)
+(use-package rustic
+  :ensure
+  :bind (:map rustic-mode-map
+              ("M-j" . lsp-ui-imenu)
+              ("M-?" . lsp-find-references)
+              ("C-c C-c l" . flycheck-list-errors)
+              ("C-c C-c a" . lsp-execute-code-action)
+              ("C-c C-c r" . lsp-rename)
+              ("C-c C-c q" . lsp-workspace-restart)
+              ("C-c C-c Q" . lsp-workspace-shutdown)
+              ("C-c C-c s" . lsp-rust-analyzer-status))
+  :config
+  ;; uncomment for less flashiness
+  ;; (setq lsp-eldoc-hook nil)
+  ;; (setq lsp-enable-symbol-highlighting nil)
+  ;; (setq lsp-signature-auto-activate nil)
+
+  ;; comment to disable rustfmt on save
+  (setq rustic-format-on-save t)
+  (add-hook 'rustic-mode-hook 'rk/rustic-mode-hook))
+
+(defun rk/rustic-mode-hook ()
+  ;; so that run C-c C-c C-r works without having to confirm, but don't try to
+  ;; save rust buffers that are not file visiting. Once
+  ;; https://github.com/brotzeit/rustic/issues/253 has been resolved this should
+  ;; no longer be necessary.
+  (when buffer-file-name
+    (setq-local buffer-save-without-query t)))
+
