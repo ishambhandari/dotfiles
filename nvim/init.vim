@@ -8,19 +8,21 @@ set listchars=tab:\|\
 set list
 set path+=**
 set shiftwidth=4
+set nowrap
 set expandtab
 set smartindent
-set nowrap
 set smartcase
 set noswapfile
 set nobackup
 set undodir=~/.vim/undodir
 set undofile
 set incsearch
-set termguicolors
+" set termguicolors
 set scrolloff=8
 set noshowmode
 set completeopt=menuone,noinsert,noselect
+set mouse=nicr 
+set mouse=a 
 set signcolumn=yes
 set guifont=Monaco\ 15 
 set ic
@@ -28,6 +30,7 @@ set conceallevel=2
 set list lcs=tab:\|\
 let g:airline_powerline_fonts = 1
 call plug#begin('~/.vim/plugged')
+Plug 'alvan/vim-closetag'
 Plug 'gruvbox-community/gruvbox'
 Plug 'mattn/emmet-vim'
 Plug 'Yggdroot/indentLine'
@@ -58,6 +61,12 @@ Plug 'sbdchd/neoformat'
 Plug 'lilydjwg/colorizer'
 Plug 'lambdalisue/suda.vim'
 Plug 'overcache/NeoSolarized'
+Plug 'dylanaraps/wal.vim'
+Plug 'joshdick/onedark.vim'
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
 call plug#end()
 
 highlight Normal guibg=none
@@ -79,7 +88,7 @@ autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_
 
 autocmd BufWritePre *.js Neoformat
 "ColorScheme 
-colorscheme NeoSolarized 
+colorscheme onedark 
 "coc conf 
 source /home/isham/.config/nvim/coc.vim
 "Custom map 
@@ -94,3 +103,6 @@ let g:indentLine_char = '|'
 let g:indentLine_concealcursor = 'inc'
 let g:indentLine_conceallevel = 1
 let g:indentLine_color_term = 109 
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+    \ }
