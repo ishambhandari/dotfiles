@@ -4,6 +4,12 @@
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
 
+-- obsidian keymaps
+vim.keymap.set("n", "<leader>on", ":ObsidianTemplate main note<CR>", { noremap = true, silent = true })
+
+vim.keymap.set("n", "<leader>od", "<cmd>ObsidianToday<CR>", { desc = "Open today's daily note" })
+vim.keymap.set("n", "<leader>ot", ":ObsidianTemplate", { noremap = true, silent = true })
+
 -- coming out to normal mode
 keymap.set("i", "jk", "<Esc>")
 
